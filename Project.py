@@ -69,7 +69,7 @@ def maintain_bluetooth_connection():
     global global_motion_detected
     global global_lock_system
     global global_deactivate_system
-    device_address = "d4:d4:da:4f:34:e6"
+    device_address = "YOUR_ARDUINO_BLE_MAC_ADDRESS"
     service_uuid = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
     char_uuid_tx = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
     char_uuid_rx = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -261,14 +261,14 @@ def recognize_speech():
 
 def sms():
     try:
-        account_sid = os.getenv("TWILIO_ACCOUNT_SID", "YOUR_TWILIO_ACCOUNT_SID")
-        auth_token = os.getenv("TWILIO_AUTH_TOKEN", "YOUR_TWILIO_AUTH_TOKEN")
+        account_sid = 'Your_account_sid'
+        auth_token = 'Your_auth_token'
         client = Client(account_sid, auth_token)
 
         message = client.messages.create(
-          from_=os.getenv("TWILIO_FROM_NUMBER", "+10000000000"),
+          from_='+17602308857',
           body='Warning! Your home may have a potential break-in. In case of emergency, please call 000. ',
-          to=os.getenv("ALERT_TO_NUMBER", "+10000000000")
+          to='+610423426651'
         )
         print(f"SMS sent: {message.sid}")
     except Exception as e:
@@ -277,17 +277,17 @@ def sms():
 def call():
     try:
         # Set the environment variables directly for testing
-        # Set TWILIO_ACCOUNT_SID in your environment before running.
-        # Set TWILIO_AUTH_TOKEN in your environment before running.
+        os.environ['TWILIO_ACCOUNT_SID'] = 'Your_account_sid'
+        os.environ['TWILIO_AUTH_TOKEN'] = 'Your_auth_token'
 
-        account_sid = os.getenv("TWILIO_ACCOUNT_SID", "YOUR_TWILIO_ACCOUNT_SID")
-        auth_token = os.getenv("TWILIO_AUTH_TOKEN", "YOUR_TWILIO_AUTH_TOKEN")
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
         client = Client(account_sid, auth_token)
 
         call = client.calls.create(
-            url='https://handler.twilio.com/twiml/EH05497edd6c164e1988aece1c424f9348',
-            to=os.getenv("ALERT_TO_NUMBER", "+10000000000"),
-            from_=os.getenv("TWILIO_FROM_NUMBER", "+10000000000")
+            url=os.getenv("TWILIO_TWIML_URL", "https://example.com/twiml.xml"),
+            to='+610423426651',
+            from_='+17602308857'
         )
         print(f"Call initiated: {call.sid}")
     except Exception as e:
