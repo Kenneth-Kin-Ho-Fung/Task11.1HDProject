@@ -261,14 +261,14 @@ def recognize_speech():
 
 def sms():
     try:
-        account_sid = 'Your_account_sid'
-        auth_token = 'Your_auth_token'
+        account_sid = os.getenv("TWILIO_ACCOUNT_SID", "YOUR_TWILIO_ACCOUNT_SID")
+        auth_token = os.getenv("TWILIO_AUTH_TOKEN", "YOUR_TWILIO_AUTH_TOKEN")
         client = Client(account_sid, auth_token)
 
         message = client.messages.create(
-          from_='+17602308857',
+          from_=os.getenv("TWILIO_FROM_NUMBER", "+10000000000"),
           body='Warning! Your home may have a potential break-in. In case of emergency, please call 000. ',
-          to='+610423426651'
+          to=os.getenv("ALERT_TO_NUMBER", "+10000000000")
         )
         print(f"SMS sent: {message.sid}")
     except Exception as e:
@@ -277,17 +277,17 @@ def sms():
 def call():
     try:
         # Set the environment variables directly for testing
-        os.environ['TWILIO_ACCOUNT_SID'] = 'Your_account_sid'
-        os.environ['TWILIO_AUTH_TOKEN'] = 'Your_auth_token'
+        # Set TWILIO_ACCOUNT_SID in your environment before running.
+        # Set TWILIO_AUTH_TOKEN in your environment before running.
 
-        account_sid = os.environ['TWILIO_ACCOUNT_SID']
-        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+        account_sid = os.getenv("TWILIO_ACCOUNT_SID", "YOUR_TWILIO_ACCOUNT_SID")
+        auth_token = os.getenv("TWILIO_AUTH_TOKEN", "YOUR_TWILIO_AUTH_TOKEN")
         client = Client(account_sid, auth_token)
 
         call = client.calls.create(
             url=os.getenv("TWILIO_TWIML_URL", "https://example.com/twiml.xml"),
-            to='+610423426651',
-            from_='+17602308857'
+            to=os.getenv("ALERT_TO_NUMBER", "+10000000000"),
+            from_=os.getenv("TWILIO_FROM_NUMBER", "+10000000000")
         )
         print(f"Call initiated: {call.sid}")
     except Exception as e:
