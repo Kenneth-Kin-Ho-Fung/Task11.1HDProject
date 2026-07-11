@@ -16,6 +16,21 @@ This project was built as a practical IoT security system prototype. An Arduino 
 - RFID, keypad, LCD, PIR sensor, door/window sensors
 - PiCamera, GPIO
 
+## Architecture
+
+```mermaid
+flowchart LR
+  User["User"] --> Access["RFID / Keypad"]
+  Door["Door and window sensors"] --> Arduino["Arduino Nano 33 IoT"]
+  PIR["PIR motion sensor"] --> Pi["Raspberry Pi"]
+  Access --> Arduino
+  Arduino <-->|BLE status and commands| Pi
+  Pi --> Camera["PiCamera recording"]
+  Pi --> Voice["Voice assistant / audio feedback"]
+  Pi --> Alert["SMS / phone alert via Twilio"]
+  Arduino --> LCD["LCD status display"]
+```
+
 ## Key Features
 
 - RFID-based access control
@@ -44,4 +59,3 @@ This project was built as a practical IoT security system prototype. An Arduino 
 ## Notes
 
 This is a university project prototype. For production use, credentials and device-specific identifiers should be moved into environment variables or a secure configuration store.
-
