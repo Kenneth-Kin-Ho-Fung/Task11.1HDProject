@@ -34,7 +34,7 @@ int windowPins[2] = {A2, A3};
 // System state
 bool systemDeactivated = true;
 String enteredPassword = "";
-String correctPassword = "575621";
+String correctPassword = "CHANGE_ME";
 // Global variables to keep track of door and window status changes
 bool wasDoorWindowFault = false;
 bool potentialBreakIn = false;
